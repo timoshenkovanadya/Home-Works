@@ -1,26 +1,20 @@
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.next = null;
-  }
-}
+import Node from "./node-class";
 
 class Stack {
-  constructor(maxStackSize = 10) {
+  constructor(maxLength = 10) {
     if (
-      typeof maxStackSize !== 'number' ||
-      !isFinite(maxStackSize) ||
-      maxStackSize <= 0
+      !isFinite(maxLength) ||
+      maxLength <= 0
     ) {
       throw new Error('Invalid maximum stack size');
     }
-    this.maxStackSize = maxStackSize;
+    this.maxLength = maxLength;
     this.head = null;
     this.length = 0;
   }
 
   push(value) {
-    if (this.length >= this.maxStackSize) {
+    if (this.length >= this.maxLength) {
       throw new Error('Stack is full');
     }
     const node = new Node(value);
