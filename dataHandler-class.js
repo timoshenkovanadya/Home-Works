@@ -9,10 +9,11 @@ class DataHandler {
   async fetchPosts() {
     try {
       const resp = await fetch(this.url);
-      console.log(resp);
+
       if (!resp.ok) {
         throw new Error(resp.status);
       }
+
       const data = await resp.json();
       data.forEach((item) => this.dataStorage.set(item.id, item));
     } catch (error) {
@@ -22,7 +23,7 @@ class DataHandler {
 
   listPosts() {
     if (this.dataStorage.size === 0) {
-      throw new Error("Data storage is empty");
+      throw new Error('Data storage is empty');
     }
     const list = [...this.dataStorage.values()];
     const sortedList = list.sort((a, b) => a.title.localeCompare(b.title));
@@ -31,7 +32,7 @@ class DataHandler {
 
   getPost(id) {
     if (!this.dataStorage.has(id)) {
-      throw new Error("There are no posts with such id");
+      throw new Error('There are no posts with such id');
     }
     return this.dataStorage.get(id);
   }
@@ -40,3 +41,22 @@ class DataHandler {
     this.dataStorage.clear();
   }
 }
+
+
+// Example:
+// const handler = new DataHandler();
+// handler
+//   .fetchPosts()
+//   .then(() => {
+//     console.log(handler.getPost(90));
+//     console.log(handler.listPosts());
+//   })
+//   .then(() => {
+//     handler.clearPosts();
+//   })
+//   .then(() => {
+//     handler.listPosts();
+//   })
+//   .catch((error) => {
+//     console.log(error.message);
+//   });
